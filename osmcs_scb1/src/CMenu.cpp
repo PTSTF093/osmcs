@@ -1545,7 +1545,13 @@ void CMenu::Consultar_e_Submeter_comando() {
 
 	cmd = mysql.ExecGetData("select indice,cmd from cmd where ativo=1 limit 1");
 	if(!cmd.empty()){
+		//limpar a linha de comando
+		Home();
+		Eeof();
 		EnterString(cmd.at(0).at(1));
+		//limpar a linha de comando
+		Home();
+		Eeof();
 		mysql.Exec("update cmd set ativo=0 where indice='"+cmd.at(0).at(0)+"'");
 	}
 
