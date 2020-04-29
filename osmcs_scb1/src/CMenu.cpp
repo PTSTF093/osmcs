@@ -1482,9 +1482,11 @@ bool CMenu::LogonSMCS(string smcs,string con,string u, string p) {
 		rc = exp_fexpectl(fpipe,
 				exp_glob, "IEE801A",0,
 				exp_glob, "IEE802A",1,
-				exp_glob, "IEE187I",2,
-				exp_glob, "USERID/PASSWORD NOT AUTHORIZED",3,
+				exp_glob, "ENTER LOGON PARAMETERS                  ",2,
+				exp_glob, "ENTER LOGON PARAMETERS -USERID/PASSWORD NOT AUTHORIZED",3,
 				exp_glob, "IEE612I",4,
+				exp_glob, "ENTER LOGON PARAMETERS -PASSWORD NOT SPECIFIED",5,
+				exp_glob, "ENTER LOGON PARAMETERS -USERID NOT SPECIFIED", 6,
 				exp_end);
 		switch (rc) {
 
@@ -1510,7 +1512,7 @@ bool CMenu::LogonSMCS(string smcs,string con,string u, string p) {
 			break;
 		case 3:
 			Ok();
-			Informar("USERID/PASSWORD NOT AUTHORIZED");
+			Informar("ENTER LOGON PARAMETERS -USERID/PASSWORD NOT AUTHORIZED");
 			return false;
 			break;
 		case 4:
@@ -1519,6 +1521,14 @@ bool CMenu::LogonSMCS(string smcs,string con,string u, string p) {
 			EnterString("k s,del=rd");
 			Informar("Consola colocada em RD, logon smcs concluido.");
 			return true;
+			break;
+		case 5:
+			Informar("ENTER LOGON PARAMETERS -PASSWORD NOT SPECIFIED");
+			return false;
+			break;
+		case 6:
+			Informar("ENTER LOGON PARAMETERS -USERID NOT SPECIFIED");
+			return false;
 			break;
 		case EXP_TIMEOUT:
 			Ok();
